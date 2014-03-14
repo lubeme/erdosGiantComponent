@@ -22,17 +22,15 @@ def bar_ub_zuf(n, p, th,seed= None):
             #Si el enlace existe o no, puede hacerse offline antes del experimento.
             posibleEdges[keyAux]=(probabilities[keyAux], node1, node2)
             keyAux += 1
-    print posibleEdges
-    print posibleEdges.pop(random.choice(posibleEdges.keys()))
-    for iter in xrange(0, len(posibleEdges)):
+    for numEdges in xrange(0, len(posibleEdges)):
         posEdge = posibleEdges.pop(random.choice(posibleEdges.keys()))
         #Existe el enlace
         if posEdge[0]==1:
             G.add_edge(posEdge[1],posEdge[2])
             #Comprobacion de componente gigante
-            if len(nx.connected_components(G)[0])>th:
+            if len(nx.connected_components(G)[0])>n*th:
                giantComponent=True
                break
     #Devuelve si existe una componente gigante y la iteración en que se alcanza
-    numEdgesForGiantComponent=iter+1
+    numEdgesForGiantComponent=numEdges+1
     return giantComponent,numEdgesForGiantComponent
